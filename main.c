@@ -9,7 +9,6 @@ typedef struct Node { double x,y; int *edges; } node;
 
 triangle *LATTICE;
 node *NODES;
-int NEXT_NODE = 0;
 
 void compute_dimensions(int depth, int *n_triangles, int *n_points)
 {
@@ -18,6 +17,16 @@ void compute_dimensions(int depth, int *n_triangles, int *n_points)
   for (i=1; i<=depth; i++)
     *n_points += temp *= 3;
   *n_triangles = pow(3, depth);
+}
+
+int new_node(double x, double y)
+{
+  static int index = 0;
+
+  NODES[index].x = x;
+  NODES[index].y = y;
+
+  return index++;
 }
 
 void set_up(int n_triangles, int n_points)
@@ -33,10 +42,9 @@ void set_up(int n_triangles, int n_points)
       NODES[i].edges[j] = -1;
   }
 
-  LATTICE[0].a = 0;
-  LATTICE[0].b = 1;
-  LATTICE[0].c = 2;
-  NEXT_NODE = 3;
+  LATTICE[0].a = new_node( 0.0,   1.0);
+  LATTICE[0].b = new_node( 0.866, 0.5);
+  LATTICE[0].c = new_node(-0.866, 0.5);
 }
 
 void add_edge(int src, int dest)
@@ -64,11 +72,11 @@ void build_graph(int end)
   }
 }
 
-void print_graph(void)
+void print_graph(int end)
 {
   int i,j;
-  for (i=0; i<NEXT_NODE; i++) {
-    printf("%d: ", i);
+  for (i=0; i<end; i++) {
+    printf("%d (%5.2f,%5.2f): ", i, NODES[i].x, NODES[i].y);
     for (j=0; NODES[i].edges[j] != -1; j++)
       printf("%d ", NODES[i].edges[j]);
     printf("\n");
@@ -82,12 +90,19 @@ void set_triangle(triangle *lattice, int i, int *corners)
   lattice[i].c = corners[2];
 }
 
+int node_between(int a_idx, int b_idx)
+{
+  double mx,my;
+  mx = (NODES[a_idx].x + NODES[b_idx].x)/2.0;
+  my = (NODES[a_idx].y + NODES[b_idx].y)/2.0;
+  return new_node(mx, my);
+}
+
 void build_inner_triangles(triangle outer, int outer_idx, triangle* nlattice)
 {
-  int ab = NEXT_NODE;
-  int ac = NEXT_NODE + 1;
-  int bc = NEXT_NODE + 2;
-  NEXT_NODE += 3;
+  int ab = node_between(outer.a, outer.b);
+  int ac = node_between(outer.a, outer.c);
+  int bc = node_between(outer.b, outer.c);
 
   int spec_a[3] = { outer.a, ab, ac };
   int spec_b[3] = { ab, outer.b, bc };
@@ -135,7 +150,7 @@ int main(int argc, char **argv)
   build_lattice(depth, n_triangles, 1);
   build_graph(n_triangles);
 
-  print_graph();
+  print_graph(n_points);
   tear_down(n_triangles, n_points);
 
   return 0;
