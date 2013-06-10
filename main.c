@@ -5,9 +5,10 @@
 
 #define MAX_EDGES 6
 typedef struct Triangle { int a,b,c; } triangle;
+typedef struct Node { double x,y; int *edges; } node;
 
 triangle *LATTICE;
-int **NODES;
+node *NODES;
 int NEXT_NODE = 0;
 
 void compute_dimensions(int depth, int *n_triangles, int *n_points)
@@ -24,12 +25,12 @@ void set_up(int n_triangles, int n_points)
   int i,j;
 
   LATTICE = (triangle *) malloc(n_triangles * sizeof(triangle));
-  NODES = (int **) malloc(n_points * sizeof(int *));
+  NODES = (node *) malloc(n_points * sizeof(node));
 
   for (i=0; i<n_points; i++) {
-    NODES[i] = (int *) malloc(MAX_EDGES * sizeof(int));
+    NODES[i].edges = (int *) malloc(MAX_EDGES * sizeof(int));
     for (j=0; j<MAX_EDGES; j++)
-      NODES[i][j] = -1;
+      NODES[i].edges[j] = -1;
   }
 
   LATTICE[0].a = 0;
@@ -42,11 +43,11 @@ void add_edge(int src, int dest)
 {
   int j=0,k=0;
 
-  while (NODES[src][j] != -1) j++;
-  while (NODES[dest][k] != -1) k++;
+  while (NODES[src].edges[j] != -1) j++;
+  while (NODES[dest].edges[k] != -1) k++;
 
-  NODES[src][j] = dest;
-  NODES[dest][k] = src;
+  NODES[src].edges[j] = dest;
+  NODES[dest].edges[k] = src;
 }
 
 void build_graph(int end)
@@ -68,8 +69,8 @@ void print_graph(void)
   int i,j;
   for (i=0; i<NEXT_NODE; i++) {
     printf("%d: ", i);
-    for (j=0; NODES[i][j] != -1; j++)
-      printf("%d ", NODES[i][j]);
+    for (j=0; NODES[i].edges[j] != -1; j++)
+      printf("%d ", NODES[i].edges[j]);
     printf("\n");
   }
 }
@@ -119,7 +120,7 @@ void tear_down(int n_triangles, int n_points)
 
   free(LATTICE);
   for (i=0; i<n_points; i++)
-    free(NODES[i]);
+    free(NODES[i].edges);
   free(NODES);
 }
 
