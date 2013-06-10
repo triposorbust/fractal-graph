@@ -2,6 +2,8 @@
 #include "lattice.h"
 #endif
 
+#define MAX_EDGES 6
+
 typedef struct Triangle { int a,b,c; } triangle;
 triangle *LATTICE;
 
@@ -53,7 +55,7 @@ void add_edge(int src, int dest)
   NODES[dest].edges[k] = src;
 }
 
-void build_graph(int end)
+void read_lattice(int end)
 {
   int i,a,b,c;
   for (i=0; i<end; i++) {
@@ -132,4 +134,19 @@ void tear_down(int n_triangles, int n_points)
   for (i=0; i<n_points; i++)
     free(NODES[i].edges);
   free(NODES);
+}
+
+void build_graph(int depth, int print)
+{
+  int n_triangles, n_points;
+  compute_dimensions(depth, &n_triangles, &n_points);
+  set_up(n_triangles, n_points);
+
+  build_lattice(depth, n_triangles, 1);
+  read_lattice(n_triangles);
+
+  print_graph(n_points);
+  tear_down(n_triangles, n_points);
+
+  return;
 }

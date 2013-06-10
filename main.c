@@ -24,16 +24,6 @@
 int main(int argc, char **argv)
 {
   assert(argc == 2);
-
-  int depth = atoi(argv[1]), n_triangles, n_points;
-  compute_dimensions(depth, &n_triangles, &n_points);
-  set_up(n_triangles, n_points);
-
-  build_lattice(depth, n_triangles, 1);
-  build_graph(n_triangles);
-
-  print_graph(n_points);
-  tear_down(n_triangles, n_points);
-
+  build_graph(atoi(argv[1]), 1);
   return 0;
 }
