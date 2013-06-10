@@ -1,3 +1,7 @@
+#ifndef __graph_h__
+#include "graph.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -5,10 +9,8 @@
 
 #define MAX_EDGES 6
 typedef struct Triangle { int a,b,c; } triangle;
-typedef struct Node { double x,y; int *edges; } node;
 
 triangle *LATTICE;
-node *NODES;
 
 void compute_dimensions(int depth, int *n_triangles, int *n_points)
 {
