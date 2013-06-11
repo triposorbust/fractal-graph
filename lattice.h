@@ -21,6 +21,8 @@
 #endif
 
 #define MAX_EDGES 6
-int build_graph(int depth, int print);
+
+int build_graph(int depth);
+void free_graph(void);
 
 #endif

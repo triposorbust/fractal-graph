@@ -67,17 +67,6 @@ void read_lattice(int end)
   }
 }
 
-void print_graph(int end)
-{
-  int i,j;
-  for (i=0; i<end; i++) {
-    printf("%d\t(%5.2f,%5.2f)\t", i, NODES[i].x, NODES[i].y);
-    for (j=0; NODES[i].edges[j] != -1; j++)
-      printf("%d\t", NODES[i].edges[j]);
-    printf("\n");
-  }
-}
-
 void set_triangle(triangle *lattice, int i, int *corners)
 {
   lattice[i].a = corners[0];
@@ -124,17 +113,15 @@ void build_lattice(int depth, int n_triangles, int end_idx)
   build_lattice(depth-1, n_triangles, 3*end_idx);
 }
 
-void tear_down(int n_triangles, int n_points)
+void free_graph(void)
 {
-  int i;
-
-  free(LATTICE);
+  int i, n_points = sizeof(NODES) / sizeof(node);
   for (i=0; i<n_points; i++)
     free(NODES[i].edges);
   free(NODES);
 }
 
-int build_graph(int depth, int print_flag)
+int build_graph(int depth)
 {
   int n_triangles, n_points;
   compute_dimensions(depth, &n_triangles, &n_points);
@@ -142,9 +129,7 @@ int build_graph(int depth, int print_flag)
 
   build_lattice(depth, n_triangles, 1);
   read_lattice(n_triangles);
-
-  if (print_flag) print_graph(n_points);
-  tear_down(n_triangles, n_points);
+  free(LATTICE);
 
   return n_points;
 }
