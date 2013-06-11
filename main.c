@@ -72,7 +72,8 @@ void random_walk(int n_nodes, double *densities, node *nodes)
 
 int main(int argc, char **argv)
 {
-  parse_options(&argc, argv);
+  void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
+  parse_options(&argc, argv, options);
   srand(time(NULL));
 
   int n_nodes = build_graph(atoi(argv[1]));
@@ -102,6 +103,7 @@ int main(int argc, char **argv)
   }
 
   free(densities);
+  free(options);
   free_graph();
   return 0;
 }

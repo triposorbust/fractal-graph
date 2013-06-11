@@ -17,7 +17,7 @@
 #endif
 
 #define N_OPTIONS 5
-enum { OPTION_HELP, OPTION_STEPS, OPTION_COUNT, OPTION_OUTPUT, OPTION_DEPTH };
-void parse_options(int *argc, char **argv);
+enum { OPTION_HELP, OPTION_STEPS, OPTION_NUMBER, OPTION_OUTPUT, OPTION_DEPTH };
+void parse_options(int *argc, char **argv, void **options);
 
 #endif
