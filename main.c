@@ -24,6 +24,6 @@
 int main(int argc, char **argv)
 {
   assert(argc == 2);
-  build_graph(atoi(argv[1]), 1);
+  int n_nodes = build_graph(atoi(argv[1]), 1);
   return 0;
 }

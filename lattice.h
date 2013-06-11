@@ -20,6 +20,7 @@
 #include <math.h>
 #endif
 
-void build_graph(int depth, int print);
+#define MAX_EDGES 6
+int build_graph(int depth, int print);
 
 #endif
