@@ -6,6 +6,10 @@
 #include "lattice.h"
 #endif
 
+#ifndef __options_h__
+#include "options.h"
+#endif
+
 #ifndef __stdio_h__
 #define __stdio_h__
 #include <stdio.h>
@@ -68,7 +72,7 @@ void random_walk(int n_nodes, double *densities, node *nodes)
 
 int main(int argc, char **argv)
 {
-  assert(argc == 2);
+  parse_options(&argc, argv);
   srand(time(NULL));
 
   int n_nodes = build_graph(atoi(argv[1]));

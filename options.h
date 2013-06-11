@@ -16,6 +16,8 @@
 #include <string.h>
 #endif
 
-void parse_options(int *argc, int **argv);
+#define N_OPTIONS 5
+enum { OPTION_HELP, OPTION_STEPS, OPTION_COUNT, OPTION_OUTPUT, OPTION_DEPTH };
+void parse_options(int *argc, char **argv);
 
 #endif
