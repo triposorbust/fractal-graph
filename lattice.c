@@ -134,7 +134,7 @@ void tear_down(int n_triangles, int n_points)
   free(NODES);
 }
 
-int build_graph(int depth, int print)
+int build_graph(int depth, int print_flag)
 {
   int n_triangles, n_points;
   compute_dimensions(depth, &n_triangles, &n_points);
@@ -143,7 +143,7 @@ int build_graph(int depth, int print)
   build_lattice(depth, n_triangles, 1);
   read_lattice(n_triangles);
 
-  print_graph(n_points);
+  if (print_flag) print_graph(n_points);
   tear_down(n_triangles, n_points);
 
   return n_points;
