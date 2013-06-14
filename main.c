@@ -59,15 +59,15 @@ int main(int argc, char **argv)
   srand(time(NULL));
 
   int n_nodes = build_graph(*(int *)options[OPTION_DEPTH]);
+  int n_walks = *(int *)options[OPTION_NUMBER];
+  int n_steps = *(int *)options[OPTION_STEPS];
 
-  if (0) { /* deprecated density functions */
-    double *densities = (double *) malloc(n_nodes * sizeof(double));
-    compute_densities(densities,
-                      n_nodes,
-                      *(int *)options[OPTION_STEPS],
-                      *(int *)options[OPTION_NUMBER]);
-    free(densities);
+  int i;
+  walk *walks = (walk *) malloc(n_walks * sizeof(walk));
+  for (i=0; i<n_steps; ++i) {
+    random_walk(walks, n_walks);
   }
+  free(walks);
 
   free_graph();
   free(options);

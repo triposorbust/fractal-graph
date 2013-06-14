@@ -15,8 +15,13 @@
 #include <time.h>
 #endif
 
-/*
-  Available methods here.
- */
+typedef struct Walk{
+  int index;
+  double x,y;
+  int step;
+  int loc;
+} walk;
+
+void random_walk(walk *walks, int end);
 
 #endif
