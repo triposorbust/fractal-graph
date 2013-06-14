@@ -31,9 +31,6 @@
 #endif
 
 
-#define STEPS 20
-#define INITS 1
-
 
 void print_graph(int end)
 {
@@ -46,7 +43,7 @@ void print_graph(int end)
   }
 }
 
-void random_walk(int n_nodes, double *densities, node *nodes)
+void distribute_densities(int n_nodes, double *densities, node *nodes)
 {
   int i,j,n_edges;
   double amount;
@@ -70,20 +67,16 @@ void random_walk(int n_nodes, double *densities, node *nodes)
   return;
 }
 
-int main(int argc, char **argv)
+void compute_densities(double *densities, int n_nodes, int steps, int number)
 {
-  void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
-  parse_options(&argc, argv, options);
-  srand(time(NULL));
 
-  int n_nodes = build_graph(atoi(argv[1]));
   int i, step, temp;
-  double *densities = (double *) malloc(n_nodes * sizeof(double));
+
   for (i=0; i<n_nodes; i++)
     densities[i] = 0.0;
 
-  assert(INITS <= n_nodes);
-  for (i=0; i<INITS; i++) {
+  assert(number <= n_nodes);
+  for (i=0; i<number; i++) {
     temp = rand()%n_nodes;
     if (densities[temp] == 1.0) {
       i--;
@@ -92,18 +85,32 @@ int main(int argc, char **argv)
     densities[temp] = 1.0;
   }
 
-  for (step=0; step<STEPS; step++)
-    random_walk(n_nodes, densities, NODES);
+  for (step=0; step<steps; step++)
+    distribute_densities(n_nodes, densities, NODES);
 
-  for (i=0; i<n_nodes; i++) {
-    printf("%d\t(%5.2f,%5.2f)\t%12.10f ", \
-           i, NODES[i].x, NODES[i].y, \
-           densities[i]);
-    printf("\n");
+  return;
+
+}
+
+int main(int argc, char **argv)
+{
+  void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
+  parse_options(&argc, argv, options);
+  srand(time(NULL));
+
+  int n_nodes = build_graph(*(int *)options[OPTION_DEPTH]);
+
+  if (0) {
+    double *densities = (double *) malloc(n_nodes * sizeof(double));
+    compute_densities(densities,
+                      n_nodes,
+                      *(int *)options[OPTION_STEPS],
+                      *(int *)options[OPTION_NUMBER]);
+    free(densities);
   }
 
-  free(densities);
-  free(options);
   free_graph();
+  free(options);
+
   return 0;
 }
