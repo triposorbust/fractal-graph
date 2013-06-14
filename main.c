@@ -10,6 +10,10 @@
 #include "densities.h"
 #endif
 
+#ifndef __randomwalk_h__
+#include "randomwalk.h"
+#endif
+
 #ifndef __options_h__
 #include "options.h"
 #endif
