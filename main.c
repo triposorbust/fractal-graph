@@ -54,6 +54,17 @@ void print_graph(int end)
 }
 
 
+void get_datetime_string(char *s, int max_chars)
+{
+  time_t rawtime;
+  struct tm *timeinfo;
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  strftime(s, max_chars, "%C-%m-%d-%H%M", timeinfo);
+  return;
+}
+
+
 void initialize_walks(walk *walks, int n_walks, int n_nodes)
 {
   int i;
@@ -67,57 +78,51 @@ void initialize_walks(walk *walks, int n_walks, int n_nodes)
 }
 
 
-void get_datetime_string(char *s, int max_chars)
+void initialize_files(walk *walks, FILE **files, int n_files, char *prefix)
 {
-  time_t rawtime;
-  struct tm *timeinfo;
-  time(&rawtime);
-  timeinfo = localtime(&rawtime);
-  strftime(s, max_chars, "%C-%m-%d-%H%M", timeinfo);
-  return;
-}
-
-
-int main(int argc, char **argv)
-{
-  void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
-  parse_options(&argc, argv, options);
-  srand(time(NULL));
-
-  int n_nodes = build_graph(*(int *)options[OPTION_DEPTH]);
-  int n_walks = *(int *)options[OPTION_NUMBER];
-  int n_steps = *(int *)options[OPTION_STEPS];
-
-  int i,j;
-  walk *walks = (walk *) malloc(n_walks * sizeof(walk));
-  initialize_walks(walks, n_walks, n_nodes);
-
-  char datetime[BUFFER_SIZE];
-  get_datetime_string(datetime, BUFFER_SIZE);
-
-  FILE **files = (FILE **) malloc(n_walks * sizeof(FILE *));
+  int i;
   char filename[BUFFER_SIZE];
-  for (i=0; i<n_walks; ++i) {
-    sprintf(filename, "%s/%s-%d.output",
-            (char *) options[OPTION_OUTPUT],
-            datetime,
-            i);
+  for (i=0; i<n_files; ++i) {
+    sprintf(filename, "%s-%d.output", prefix, i);
     files[i] = fopen(filename, "w");
-
-    fprintf(files[i], "# random walk index: %d\n", walks[i].index);
-    fprintf(files[i], "# initial position: %d\n", walks[i].loc);
-    fprintf(files[i], "%d\t%f\t%f\n", walks[i].loc, walks[i].x, walks[i].y);
 
     if (files[i] == NULL) {
       printf("Failed to open output file: %s", filename);
       exit(0);
     }
+
+    fprintf(files[i], "# random walk index: %d\n", walks[i].index);
+    fprintf(files[i], "# initial position: %d\n", walks[i].loc);
   }
+}
+
+
+int main(int argc, char **argv)
+{
+  srand(time(NULL));
+  void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
+  parse_options(&argc, argv, options);
+
+  int i, j, n_nodes, n_walks, n_steps;
+  char datetime[BUFFER_SIZE], prefix[BUFFER_SIZE];
+
+  get_datetime_string(datetime, BUFFER_SIZE);
+  sprintf(prefix, "%s/%s", (char *) options[OPTION_OUTPUT], datetime);
+
+  n_nodes = build_graph(*(int *)options[OPTION_DEPTH]);
+  n_walks = *(int *)options[OPTION_NUMBER];
+  n_steps = *(int *)options[OPTION_STEPS];
+
+  walk *walks = (walk *) malloc(n_walks * sizeof(walk));
+  FILE **files = (FILE **) malloc(n_walks * sizeof(FILE *));
+
+  initialize_walks(walks, n_walks, n_nodes);
+  initialize_files(walks, files, n_walks, prefix);
 
   for (i=0; i<n_steps; ++i) {
-    random_walk(walks, n_walks);
     for (j=0; j<n_walks; ++j)
-      fprintf(files[j], "%d\t%f\t%f\n", walks[j].loc, walks[j].x, walks[j].y);
+      fprintf(files[j], "%f\t%f\n", walks[j].x, walks[j].y);
+    random_walk(walks, n_walks);
   }
 
   for (i=0; i<n_walks; ++i)
