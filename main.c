@@ -39,6 +39,8 @@
 #endif
 
 
+#define BUFFER_SIZE 300
+
 
 void print_graph(int end)
 {
@@ -48,6 +50,19 @@ void print_graph(int end)
     for (j=0; NODES[i].edges[j] != -1; j++)
       printf("%d\t", NODES[i].edges[j]);
     printf("\n");
+  }
+}
+
+
+void initialize_walks(walk *walks, int n_walks, int n_nodes)
+{
+  int i;
+  for (i=0; i<n_walks; i++) {
+    (walks+i)->index = i;
+    (walks+i)->step = 0;
+    (walks+i)->loc = rand() % n_nodes;
+    (walks+i)->x = NODES[walks[i].loc].x;
+    (walks+i)->y = NODES[walks[i].loc].y;
   }
 }
 
@@ -62,11 +77,46 @@ int main(int argc, char **argv)
   int n_walks = *(int *)options[OPTION_NUMBER];
   int n_steps = *(int *)options[OPTION_STEPS];
 
-  int i;
+  print_graph(n_nodes);
+
+  int i,j;
   walk *walks = (walk *) malloc(n_walks * sizeof(walk));
+  initialize_walks(walks, n_walks, n_nodes);
+
+  time_t rawtime;
+  struct tm *timeinfo;
+  char datetime[BUFFER_SIZE];
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  strftime(datetime, BUFFER_SIZE, "%C-%m-%d-%H%M", timeinfo);
+
+  FILE **files = (FILE **) malloc(n_walks * sizeof(FILE *));
+  char filename[BUFFER_SIZE];
+  for (i=0; i<n_walks; ++i) {
+    sprintf(filename, "%s/%s-%d.output",
+            (char *) options[OPTION_OUTPUT],
+            datetime,
+            i);
+    files[i] = fopen(filename, "w");
+
+    fprintf(files[i], "# random walk index: %d\n", walks[i].index);
+    fprintf(files[i], "# initial position: %d\n", walks[i].loc);
+    fprintf(files[i], "%d\t%f\t%f\n", walks[i].loc, walks[i].x, walks[i].y);
+
+    if (files[i] == NULL) {
+      printf("Failed to open output file: %s", filename);
+      exit(0);
+    }
+  }
+
   for (i=0; i<n_steps; ++i) {
     random_walk(walks, n_walks);
+    for (j=0; j<n_walks; ++j)
+      fprintf(files[j], "%d\t%f\t%f\n", walks[j].loc, walks[j].x, walks[j].y);
   }
+
+  for (i=0; i<n_walks; ++i)
+    fclose(files[i]);
   free(walks);
 
   free_graph();
