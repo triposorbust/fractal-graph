@@ -13,8 +13,7 @@ void random_walk(walk *walks, int end)
 
     next_node = anode.edges[0];
     for (j=0; anode.edges[j] != -1; ++j)
-      next_node = ((rand() % 100) / 100.0) <= (1.0 / (float)j) ? \
-        anode.edges[j] : next_node;
+      next_node = (rand() % (j+1) == 0) ? anode.edges[j] : next_node;
 
     (*(walks+i)).loc = next_node;
     (*(walks+i)).step += 1;
