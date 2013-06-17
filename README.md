@@ -76,7 +76,9 @@ t2ahc $ python plot.py -h
 
 
 ### License
-Copyright (c) 2013 [Andy Chiang][3]. All rights reserved.
+
+Copyright &copy; 2013, [Andy Chiang][3]. All rights reserved.
+
 This software is distrubted under the MIT License.
 
 
