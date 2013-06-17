@@ -89,5 +89,10 @@ void parse_options(int *argc, char **argv, void *options[])
 
   }
 
+  if (* (int *) options[OPTION_HELP]) {
+    print_help();
+    exit(0);
+  }
+
   return;
 }
