@@ -18,7 +18,7 @@ Written for S.M. Ali Tabei for studies on random-walks. A quick program to:
 In principle, some of these components can be generalized to other kinds of lattices.
 
 
-### Quick Start:
+### Quick Start
 
 
 ```
@@ -27,7 +27,7 @@ t2ahc $ ./randomwalk [options]
 ```
 
 
-### For More Options or Help:
+### Help
 
 
 ```
@@ -47,7 +47,13 @@ How you use it is up to you!
 ```
 
 
-What you do with this is up to you!
+### What you do with this...
+
+
+... is up to you!
+
+
+
 
 
 [1]: http://en.wikipedia.org/wiki/Sierpinski_triangle
