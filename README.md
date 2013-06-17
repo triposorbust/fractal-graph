@@ -43,8 +43,28 @@ Program for executing random walk on a lattice. Options:
 
 How you use it is up to you!
 
+```
+
+
+### Plotting
+
+
+Package by default outputs to the `output` subdirectory. This can be changed by using the `-o` option. The default output directory includes a `[matplotlib][2]` script for printing a `.png` of a given random walk.
+
+
+To plot, simply:
 
 ```
+t2ahc $ python plot.py <some-graph.output> <some-random-walk.output>
+```
+
+
+Or for more information:
+
+```
+t2ahc $ python plot.py -h
+```
+
 
 
 ### What you do with this...
@@ -57,3 +77,4 @@ How you use it is up to you!
 
 
 [1]: http://en.wikipedia.org/wiki/Sierpinski_triangle
+[2]: http://matplotlib.org/
