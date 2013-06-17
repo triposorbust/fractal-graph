@@ -67,7 +67,7 @@ void get_datetime_string(char *s, int max_chars)
   struct tm *timeinfo;
   time(&rawtime);
   timeinfo = localtime(&rawtime);
-  strftime(s, max_chars, "%C-%m-%d-%H%M", timeinfo);
+  strftime(s, max_chars, "%y-%m-%d-%H%M", timeinfo);
 }
 
 
