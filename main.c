@@ -77,8 +77,6 @@ int main(int argc, char **argv)
   int n_walks = *(int *)options[OPTION_NUMBER];
   int n_steps = *(int *)options[OPTION_STEPS];
 
-  print_graph(n_nodes);
-
   int i,j;
   walk *walks = (walk *) malloc(n_walks * sizeof(walk));
   initialize_walks(walks, n_walks, n_nodes);
