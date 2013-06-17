@@ -49,7 +49,7 @@ How you use it is up to you!
 ### Plotting
 
 
-Package by default outputs to the `output` subdirectory. This can be changed by using the `-o` option. The default output directory includes a `[matplotlib][2]` script for printing a `.png` of a given random walk.
+Package by default outputs to the `output` subdirectory. This can be changed by using the `-o` option. The default output directory includes a [matplotlib][2] script for printing a `.png` of a given random walk.
 
 
 To plot, simply:
