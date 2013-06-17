@@ -50,10 +50,15 @@ How you use it is up to you!
 Package by default outputs to the `output` subdirectory. This can be changed by using the `-o` option. The default output directory includes a [matplotlib][2] script for printing a `.png` of a given random walk.
 
 To plot, simply:
-```t2ahc $ python plot.py <some-graph.output> <some-random-walk.output>```
+
+```
+t2ahc $ python plot.py <some-graph.output> <some-random-walk.output>
+```
 
 Or for more information:
-```t2ahc $ python plot.py -h```
+```
+t2ahc $ python plot.py -h
+```
 
 
 
@@ -71,7 +76,7 @@ Or for more information:
 
 
 ### License
-Copyright &copy 2013 [Andy Chiang][3]. All rights reserved.
+Copyright (c) 2013 [Andy Chiang][3]. All rights reserved.
 This software is distrubted under the MIT License.
 
 
