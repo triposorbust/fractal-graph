@@ -67,6 +67,17 @@ void initialize_walks(walk *walks, int n_walks, int n_nodes)
 }
 
 
+void get_datetime_string(char *s, int max_chars)
+{
+  time_t rawtime;
+  struct tm *timeinfo;
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  strftime(s, max_chars, "%C-%m-%d-%H%M", timeinfo);
+  return;
+}
+
+
 int main(int argc, char **argv)
 {
   void **options = (void **) malloc(N_OPTIONS * sizeof(void *));
@@ -81,12 +92,8 @@ int main(int argc, char **argv)
   walk *walks = (walk *) malloc(n_walks * sizeof(walk));
   initialize_walks(walks, n_walks, n_nodes);
 
-  time_t rawtime;
-  struct tm *timeinfo;
   char datetime[BUFFER_SIZE];
-  time(&rawtime);
-  timeinfo = localtime(&rawtime);
-  strftime(datetime, BUFFER_SIZE, "%C-%m-%d-%H%M", timeinfo);
+  get_datetime_string(datetime, BUFFER_SIZE);
 
   FILE **files = (FILE **) malloc(n_walks * sizeof(FILE *));
   char filename[BUFFER_SIZE];
