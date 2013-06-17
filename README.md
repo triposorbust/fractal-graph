@@ -7,7 +7,7 @@ Transition paths on a [Sierpinski Gasket][1]...
 
 ### Introduction
 
-Written for S.M. Ali Tabei for studies on random-walks. A quick program to:
+Written with S.M. Ali Tabei for studies on random-walks. A quick program to:
 
  - Generate a triangular lattice graph
  - Layout the graph in Cartesian space
@@ -62,12 +62,6 @@ t2ahc $ python plot.py -h
 
 
 
-### What you do with this...
-
-... is up to you!
-
-
-
 ### Authors
 
  - Andy Chiang (The University of Chicago)
@@ -79,7 +73,7 @@ t2ahc $ python plot.py -h
 
 Copyright &copy; 2013, [Andy Chiang][3]. All rights reserved.
 
-This software is distrubted under the MIT License.
+This software is distributed under the MIT License.
 
 
 
