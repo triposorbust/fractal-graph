@@ -42,15 +42,22 @@
 #define BUFFER_SIZE 300
 
 
-void print_graph(int end)
+void print_graph(char *prefix, int n_nodes)
 {
   int i,j;
-  for (i=0; i<end; i++) {
-    printf("%d\t(%5.2f,%5.2f)\t", i, NODES[i].x, NODES[i].y);
+
+  char filename[BUFFER_SIZE];
+  sprintf(filename, "%s-graph.output", prefix);
+  FILE *file = fopen(filename, "w");
+
+  for (i=0; i<n_nodes; i++) {
+    fprintf(file, "%d\t(%5.2f,%5.2f)\t", i, NODES[i].x, NODES[i].y);
     for (j=0; NODES[i].edges[j] != -1; j++)
-      printf("%d\t", NODES[i].edges[j]);
-    printf("\n");
+      fprintf(file, "%d\t", NODES[i].edges[j]);
+    fprintf(file, "\n");
   }
+
+  fclose(file);
 }
 
 
@@ -61,7 +68,6 @@ void get_datetime_string(char *s, int max_chars)
   time(&rawtime);
   timeinfo = localtime(&rawtime);
   strftime(s, max_chars, "%C-%m-%d-%H%M", timeinfo);
-  return;
 }
 
 
@@ -118,6 +124,7 @@ int main(int argc, char **argv)
 
   initialize_walks(walks, n_walks, n_nodes);
   initialize_files(walks, files, n_walks, prefix);
+  print_graph(prefix, n_nodes);
 
   for (i=0; i<n_steps; ++i) {
     for (j=0; j<n_walks; ++j)
