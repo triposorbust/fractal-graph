@@ -4,22 +4,20 @@ Transition paths on a [Sierpinski Gasket][1]...
 -----------------------------------------------
 
 
+
 ### Introduction
 
-
 Written for S.M. Ali Tabei for studies on random-walks. A quick program to:
-
 
  - Generate a triangular lattice graph
  - Layout the graph in Cartesian space
  - Execute a random walk on the graph
 
-
 In principle, some of these components can be generalized to other kinds of lattices.
 
 
-### Quick Start
 
+### Quick Start
 
 ```
 t2ahc $ make
@@ -27,8 +25,8 @@ t2ahc $ ./randomwalk [options]
 ```
 
 
-### Help
 
+### Help
 
 ```
 t2ahc $ ./randomwalk -h
@@ -46,35 +44,38 @@ How you use it is up to you!
 ```
 
 
-### Plotting
 
+### Plotting
 
 Package by default outputs to the `output` subdirectory. This can be changed by using the `-o` option. The default output directory includes a [matplotlib][2] script for printing a `.png` of a given random walk.
 
-
 To plot, simply:
-
-```
-t2ahc $ python plot.py <some-graph.output> <some-random-walk.output>
-```
-
+```t2ahc $ python plot.py <some-graph.output> <some-random-walk.output>```
 
 Or for more information:
-
-```
-t2ahc $ python plot.py -h
-```
+```t2ahc $ python plot.py -h```
 
 
 
 ### What you do with this...
 
-
 ... is up to you!
 
 
+
+### Authors
+
+ - Andy Chiang (The University of Chicago)
+ - S.M. Ali Tabei (The University of Chicago)
+
+
+
+### License
+Copyright &copy 2013 [Andy Chiang][3]. All rights reserved.
+This software is distrubted under the MIT License.
 
 
 
 [1]: http://en.wikipedia.org/wiki/Sierpinski_triangle
 [2]: http://matplotlib.org/
+[3]: http://www.andy-chiang.com
