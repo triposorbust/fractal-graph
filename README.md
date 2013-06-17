@@ -4,7 +4,7 @@ Transition paths on a [Sierpinski Gasket][1]...
 -----------------------------------------------
 
 
-*** Introduction ***
+### Introduction
 
 
 Written for S.M. Ali Tabei for studies on random-walks. A quick program to:
@@ -18,7 +18,7 @@ Written for S.M. Ali Tabei for studies on random-walks. A quick program to:
 In principle, some of these components can be generalized to other kinds of lattices.
 
 
-*** Quick Start: ***
+### Quick Start:
 
 
 ```
@@ -27,7 +27,7 @@ t2ahc $ ./randomwalk [options]
 ```
 
 
-*** For More Options or Help: ***
+### For More Options or Help:
 
 
 ```
